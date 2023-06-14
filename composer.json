@@ -1,21 +1,21 @@
 {
-  "name": "janharsa/mysql-session-handler",
-  "description": "MySQL session handler for Nette Framework with Nextras Dbal",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Jan Harsa",
-      "homepage": "http://janharsa.cz"
+    "name": "janharsa/mysql-session-handler",
+    "description": "MySQL session handler for Nette Framework with Nextras Dbal",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Harsa",
+            "homepage": "http://janharsa.cz"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "nextras/dbal": ">=3.0",
+        "nette/di": ">=2.2"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
     }
-  ],
-  "require": {
-    "php": ">=7.2",
-    "nextras/dbal": ">=3.0",
-    "nette/di": ">=2.2"
-  },
-  "autoload": {
-    "classmap": [
-      "src/"
-    ]
-  }
 }

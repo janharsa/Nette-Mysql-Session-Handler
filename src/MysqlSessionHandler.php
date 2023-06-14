@@ -39,7 +39,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function close()
+    public function close() : bool
     {
         $this->connection->query("SELECT RELEASE_LOCK('$this->lockName')");
         return true;
@@ -55,7 +55,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function destroy($session_id)
+    public function destroy($session_id) : bool
     {
         $this->connection->query("DELETE FROM $this->tableName WHERE id = %s", $session_id);
         return true;
@@ -74,7 +74,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function gc($maxlifetime)
+    public function gc($maxlifetime) : int|false
     {
         $this->connection->query("DELETE FROM $this->tableName WHERE time < %i", (time() - $maxlifetime));
         return true;
@@ -91,7 +91,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function open($save_path, $name)
+    public function open($save_path, $name) : bool
     {
         $this->lockName = 'session_' . session_id();
         $this->connection->query("SELECT GET_LOCK('$this->lockName', %i)", self::LOCK_TIMEOUT);
@@ -109,7 +109,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function read($session_id)
+    public function read($session_id) : string|false
     {
         $result = $this->connection->query("SELECT data FROM $this->tableName s WHERE s.id = %s", $session_id);
         if ($row = $result->fetch())
@@ -134,7 +134,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function write($session_id, $session_data)
+    public function write($session_id, $session_data) : bool
     {
         $this->connection->query("REPLACE INTO $this->tableName (id, time, data) VALUES (%s, %i, %s)", $session_id, time(), $session_data);
         return true;
