@@ -74,10 +74,10 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function gc($maxlifetime) : int|false
+    public function gc($maxlifetime) : int | false
     {
         $this->connection->query("DELETE FROM $this->tableName WHERE time < %i", (time() - $maxlifetime));
-        return true;
+        return 1;
     }
 
     /**
@@ -109,7 +109,7 @@ final class MysqlSessionHandler implements \SessionHandlerInterface
      * </p>
      * @since 5.4.0
      */
-    public function read($session_id) : string|false
+    public function read($session_id) : string | false
     {
         $result = $this->connection->query("SELECT data FROM $this->tableName s WHERE s.id = %s", $session_id);
         if ($row = $result->fetch())
